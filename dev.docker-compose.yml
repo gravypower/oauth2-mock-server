@@ -1,0 +1,8 @@
+version: '3'
+services:
+  oauth2-mock-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "56817:56817"
