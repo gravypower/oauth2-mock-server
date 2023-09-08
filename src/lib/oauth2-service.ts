@@ -208,7 +208,6 @@ export class OAuth2Service extends EventEmitter {
           };
           break;
         case 'authorization_code':
-          scope = 'dummy';
           xfn = (_header, payload) => {
             Object.assign(payload, {
               sub: 'johndoe',
@@ -218,7 +217,6 @@ export class OAuth2Service extends EventEmitter {
           };
           break;
         case 'refresh_token':
-          scope = 'dummy';
           xfn = (_header, payload) => {
             Object.assign(payload, {
               sub: 'johndoe',
