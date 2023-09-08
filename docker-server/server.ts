@@ -4,15 +4,11 @@ import { OAuth2Server } from '../dist/index';
 async function startServer() {
     const server = new OAuth2Server();
 
-    server.issuer.on('beforeSigning', (token) => {
-        token.payload.aud = 'api.profarmer.com.au'
-    });
-
 
     const jwk = await server.issuer.keys.generate('RS256');
     console.log(`Generated new RSA key with kid "${jwk.kid}"`);
 
-    await server.start(56817, 'localhost');
+    await server.start(56817, '0.0.0.0');
 
     const addr = server.address();
     const hostname = addr.family === 'IPv6' ? `[${addr.address}]` : addr.address;

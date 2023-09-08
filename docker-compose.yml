@@ -1,0 +1,11 @@
+version: '3'
+services:
+  oauth2-mock-server:
+    image: ghcr.io/gravypower/oauth2-mock-server:latest
+    ports:
+      - "56817:56817"
+    ## override the server.ts with a bind mount
+    # volumes:
+    #   - type: bind
+    #     source: ./oauth2-mock-server
+    #     target: /usr/src/app/docker-server
