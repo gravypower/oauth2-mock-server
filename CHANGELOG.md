@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [7.1.2](https://github.com/axa-group/oauth2-mock-server/compare/v7.1.1...v7.1.2) — 2024-05-21
+
+### Changed
+
+- Add support for Node.js 22
+
+## [7.1.1](https://github.com/axa-group/oauth2-mock-server/compare/v7.1.0...v7.1.1) — 2023-10-24
+
+### Fixed
+
+- Be a better citizen in an ECMAScript modules world
+
+## [7.1.0](https://github.com/axa-group/oauth2-mock-server/compare/v7.0.0...v7.1.0) — 2023-10-23
+
+### Added
+
+- Add support for "aud" claim in "client_credentials" grants (by [kadams54](https://github.com/kadams54))
+
+### Changed
+
+- Update dependencies
+
 ## [7.0.0](https://github.com/axa-group/oauth2-mock-server/compare/v6.0.1...v7.0.0) — 2023-10-04
 
 ### Changed

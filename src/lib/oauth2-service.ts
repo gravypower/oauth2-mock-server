@@ -24,7 +24,7 @@ import express, { type RequestHandler } from 'express';
 import cors from 'cors';
 import basicAuth from 'basic-auth';
 import { EventEmitter } from 'events';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 import { OAuth2Issuer } from './oauth2-issuer';
 import {
@@ -193,10 +193,13 @@ export class OAuth2Service extends EventEmitter {
       const reqBody = req.body;
 
       let { scope } = reqBody;
+      const { aud } = reqBody;
 
       switch (req.body.grant_type) {
         case 'client_credentials':
-          xfn = scope;
+          xfn = (_header, payload) => {
+            Object.assign(payload, { scope, aud });
+          };
           break;
         case 'password':
           xfn = (_header, payload) => {
@@ -208,6 +211,7 @@ export class OAuth2Service extends EventEmitter {
           };
           break;
         case 'authorization_code':
+          scope = scope ?? 'dummy';
           xfn = (_header, payload) => {
             Object.assign(payload, {
               sub: 'johndoe',
@@ -217,6 +221,7 @@ export class OAuth2Service extends EventEmitter {
           };
           break;
         case 'refresh_token':
+          scope = scope ?? 'dummy';
           xfn = (_header, payload) => {
             Object.assign(payload, {
               sub: 'johndoe',
@@ -257,7 +262,7 @@ export class OAuth2Service extends EventEmitter {
         };
 
         body['id_token'] = await this.buildToken(req, tokenTtl, xfn);
-        body['refresh_token'] = uuidv4();
+        body['refresh_token'] = randomUUID();
       }
 
       const tokenEndpointResponse: MutableResponse = {
@@ -282,7 +287,7 @@ export class OAuth2Service extends EventEmitter {
   };
 
   private authorizeHandler: RequestHandler = (req, res) => {
-    const code = uuidv4();
+    const code = randomUUID();
     const {
       nonce,
       scope,

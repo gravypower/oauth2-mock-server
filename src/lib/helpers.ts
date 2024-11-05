@@ -19,7 +19,7 @@ import { AssertionError } from 'assert';
 import type { AddressInfo } from 'net';
 import { readFileSync } from 'fs';
 
-import isPlainObject from 'lodash.isplainobject';
+import { isPlainObject } from 'is-plain-object';
 
 import type { TokenRequest } from './types';
 
@@ -73,6 +73,15 @@ export function assertIsValidTokenRequest(
 
   if ('code' in body) {
     assertIsString(body['code'], "Invalid 'code' type");
+  }
+
+  if ('aud' in body) {
+    const aud = body['aud'];
+    if (Array.isArray(aud)) {
+      aud.forEach((a) => assertIsString(a, "Invalid 'aud' type"));
+    } else {
+      assertIsString(aud, "Invalid 'aud' type");
+    }
   }
 }
 
